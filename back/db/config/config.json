@@ -1,23 +1,23 @@
 {
   "development": {
-    "username": "postgres",
-    "password": "1234",
-    "database": "db",
+    "username": "ilya",
+    "password": "password",
+    "database": "bookstore",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "logging": false
   },
   "test": {
-    "username": "postgres",
-    "password": "1234",
-    "database": "database_test",
+    "username": "ilya",
+    "password": "password",
+    "database": "bookstore",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "production": {
-    "username": "postgres",
-    "password": "1234",
-    "database": "database_production",
+    "username": "ilya",
+    "password": "password",
+    "database": "bookstore",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },

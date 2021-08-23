@@ -1,4 +1,4 @@
-import { type } from "os";
+
 import React, { useState } from "react";
 import Modal from "react-modal";
 import ModalLogin from "./ModalLogin";

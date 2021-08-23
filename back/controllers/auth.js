@@ -1,20 +1,21 @@
-const { validationResult } = require("express-validator");
-const bcrypt = require("bcryptjs");
-const db = require("../db/models");
-const token = require("../token");
+const { validationResult } = require('express-validator');
+const bcrypt = require('bcryptjs');
+const db = require('../db/models');
+const token = require('../token');
 
 module.exports.login = async function (req, res) {
+  console.log(req);
   const { email, password } = req.body;
 
   try {
     const error = validationResult(req);
     if (!error.isEmpty()) {
-      return res.status(400).json({ message: "Registration error" });
+      return res.status(400).json({ message: 'Registration error' });
     }
     const user = await db.User.findOne({ where: { email: email } });
     let userToken;
     if (!user) {
-      res.status(404).json({ message: "User not found" });
+      res.status(404).json({ message: 'User not found' });
       return;
     }
     const passwordResult = bcrypt.compareSync(password, user.password);
@@ -22,12 +23,12 @@ module.exports.login = async function (req, res) {
       userToken = token.createToken(user.id);
       res.send({ token: userToken });
     } else {
-      res.status(404).json({ message: "Invalid password" });
+      res.status(404).json({ message: 'Invalid password' });
       return;
     }
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Something went wrong" });
+    res.status(500).json({ message: 'Something went wrong' });
   }
 };
 
@@ -37,14 +38,14 @@ module.exports.register = async function (req, res) {
   try {
     const error = validationResult(req);
     if (!error.isEmpty()) {
-      return res.status(400).json({ message: "Registration error" });
+      return res.status(400).json({ message: 'Registration error' });
     }
     const candidat = await db.User.findOne({ where: { email: email } });
     if (candidat) {
-      return res.status(400).json({ message: "Email already exists" });
+      return res.status(400).json({ message: 'Email already exists' });
     }
     if (password.length < 6) {
-      return res.status(400).json({ message: "Password to short" });
+      return res.status(400).json({ message: 'Password to short' });
     }
     const salt = bcrypt.genSaltSync(10);
 
@@ -58,7 +59,7 @@ module.exports.register = async function (req, res) {
     res.status(201).json({ message: user });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Something went wrong" });
+    res.status(500).json({ message: 'Something went wrong' });
   }
 };
 
@@ -66,12 +67,12 @@ module.exports.getUsers = async (req, res) => {
   try {
     const users = await db.User.findAll({
       raw: true,
-      attributes: ["id", "name", "email", "dob"],
+      attributes: ['id', 'name', 'email', 'dob'],
     });
     console.log(req.headers);
     if (!users) {
       res.status(404).json({
-        message: "No registered users",
+        message: 'No registered users',
       });
       return;
     }
@@ -79,7 +80,7 @@ module.exports.getUsers = async (req, res) => {
     res.status(200).json({ message: users });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Something went wrong", data: err });
+    res.status(500).json({ message: 'Something went wrong', data: err });
   }
 };
 
@@ -97,7 +98,7 @@ module.exports.delete = async function (req, res) {
     await user.destroy({ where: { id: id } });
     res.status(200).json({ message: `User whis id ${id} was deleted` });
   } catch (err) {
-    res.status(500).json({ message: "Something went wrong" });
+    res.status(500).json({ message: 'Something went wrong' });
   }
 };
 
@@ -108,7 +109,7 @@ module.exports.update = async function (req, res) {
     const user = await db.User.findOne({ where: { email: email } });
 
     if (!user) {
-      res.status(404).json({ message: "User not found" });
+      res.status(404).json({ message: 'User not found' });
       return;
     }
 

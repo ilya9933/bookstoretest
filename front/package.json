@@ -12,6 +12,8 @@
     "@types/react-dom": "^17.0.0",
     "@types/react-modal": "^3.12.1",
     "antd": "^4.16.12",
+    "axios": "^0.21.1",
+    "nvm": "^0.0.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-modal": "^3.14.3",
