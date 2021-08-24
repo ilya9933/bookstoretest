@@ -1,12 +1,16 @@
-import { actions } from './constUser';
+import { actions } from "./constUser";
 
 export interface DataUser {
+  id: number;
+  name: string;
+  dob: Date;
   email: string;
-  password: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 interface UserState {
-  data: DataUser;
+  data?: DataUser;
   loading: boolean;
   error: null | boolean;
 }
@@ -17,10 +21,6 @@ interface actionUser {
 }
 
 const defaultState: UserState = {
-  data: {
-    email: '',
-    password: '',
-  },
   loading: false,
   error: null,
 };
@@ -29,6 +29,7 @@ const user = (state = defaultState, action: actionUser): UserState => {
     case actions.LOGIN_USER:
       return {
         ...state,
+        data: action.payload,
         loading: true,
       };
     default:

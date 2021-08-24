@@ -1,6 +1,6 @@
 import React from "react";
 import ImputSearch from "./ImputSearch";
-import Loging from "./Loging";
+import Loging from "./Login";
 
 function Header() {
   return (

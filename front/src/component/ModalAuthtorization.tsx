@@ -1,12 +1,13 @@
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
+import { useAppSelector } from "../State";
 import ModalLogin from "./ModalLogin";
 import ModalRegistration from "./ModalRegistration";
 
-function Loging() {
+function ModalAuthtorization() {
   const [modalIsOpen, setIsOpen] = useState(false);
   let [modalAutor, setModalAutor] = useState("login");
+  const user = useAppSelector((state) => state.user);
 
   function modalType() {
     if (modalAutor === "login") {
@@ -44,4 +45,4 @@ function Loging() {
   );
 }
 
-export default Loging;
+export default ModalAuthtorization;

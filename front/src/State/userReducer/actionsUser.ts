@@ -1,5 +1,5 @@
-import { actions } from './constUser';
-import { DataUser } from './userReducer';
+import { actions } from "./constUser";
+import { DataUser } from "./userReducer";
 
 export const addUser = () => ({
   type: actions.ADD_USER,

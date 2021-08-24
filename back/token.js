@@ -12,6 +12,9 @@ module.exports.createToken = (information) => {
 };
 
 module.exports.verifyToken = (token) => {
-  console.log(jwt.decode(token));
   return jwt.verify(token, config.token.secret);
+};
+
+module.exports.decodeToken = (token) => {
+  return jwt.decode(token);
 };

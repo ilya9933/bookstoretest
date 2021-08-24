@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useAppSelector } from '../State';
-import { loginUser } from '../State/userReducer/actionsUser';
-import user from '../State/userReducer/userReducer';
-import { loginUserThunk } from '../State/userReducer/userThunk';
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../State";
+import { loginUser } from "../State/userReducer/actionsUser";
+import user from "../State/userReducer/userReducer";
+import { loginUserThunk } from "../State/userReducer/userThunk";
 
 interface IProps {
   modalType(): void;
 }
 
 function ModalLogin({ modalType }: IProps) {
-  const [password, setPassword] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const dispatch = useDispatch();
   const user = useAppSelector((state) => state.user);
 
@@ -22,9 +22,9 @@ function ModalLogin({ modalType }: IProps) {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     switch (e.target.name) {
-      case 'userEmail':
+      case "userEmail":
         return setEmail(e.target.value);
-      case 'userPassword':
+      case "userPassword":
         return setPassword(e.target.value);
     }
   };
@@ -33,15 +33,9 @@ function ModalLogin({ modalType }: IProps) {
     e.preventDefault();
     dispatch(loginUserThunk(email, password));
 
-    setEmail('');
-    setPassword('');
+    setEmail("");
+    setPassword("");
   };
-
-  //   state.inputs
-  // const submit = () => {
-
-  //   axios(state.inputs) => data
-  // }
 
   return (
     <div>

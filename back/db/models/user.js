@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      dob: { type: DataTypes.STRING, allowNull: false },
+      dob: { type: DataTypes.DATEONLY, allowNull: false },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -31,6 +31,11 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "User",
+      scopes: {
+        withoutPassword: {
+          attributes: { exclude: ["password"] },
+        },
+      },
     }
   );
   return User;

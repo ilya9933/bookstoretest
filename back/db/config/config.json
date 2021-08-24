@@ -1,8 +1,8 @@
 {
   "development": {
-    "username": "ilya",
-    "password": "password",
-    "database": "bookstore",
+    "username": "postgres",
+    "password": "1234",
+    "database": "db",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "logging": false

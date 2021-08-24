@@ -25,5 +25,6 @@ router.post(
 router.get("/get", token.tokenChecking, controllers.getUsers);
 router.post("/update", token.tokenChecking, controllers.update);
 router.delete("/delete", token.tokenChecking, controllers.delete);
+router.get("/bytoken", token.tokenChecking, controllers.getToken);
 
 module.exports = router;
