@@ -4,7 +4,7 @@ module.exports.tokenChecking = (req, res, next) => {
   const {
     headers: { authorization },
   } = req;
-  const authorizationSplice = authorization.slice(7);
+
   console.log("authorization", authorization);
   try {
     tokenChek.verifyToken(authorization);

@@ -12,7 +12,16 @@ module.exports.login = async function (req, res) {
     if (!error.isEmpty()) {
       return res.status(400).json({ message: "Registration error" });
     }
-    const user = await db.User.findOne({ where: { email: email } });
+    const user = await db.User.findOne({
+      where: { email: email },
+      include: [
+        {
+          model: db.Images,
+          as: "image",
+          attributes: ["images"],
+        },
+      ],
+    });
     let userToken;
     if (!user) {
       res.status(404).json({ message: "User not found" });
@@ -109,26 +118,57 @@ module.exports.delete = async function (req, res) {
 };
 
 module.exports.update = async function (req, res) {
-  const { email, name } = req.body;
+  const { name, oldEmail, newEmail, dob, oldPassword, newPassword } = req.body;
+  const { authorization } = req.headers;
+
+  const id = token.decodeToken(authorization);
 
   try {
-    const user = await db.User.findOne({ where: { email: email } });
-
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res.status(400).json({ message: "Registration error" });
+    }
+    const user = await db.User.findOne({ where: { id: id.data } });
     if (!user) {
-      res.status(404).json({ message: "User not found" });
+      res.status(404).send(`User not found`);
+      return;
+    }
+    if (oldEmail !== user.email) {
+      res.status(404).json({ message: "Invalid email" });
+      return;
+    }
+    const passwordResult = bcrypt.compareSync(oldPassword, user.password);
+    if (!passwordResult) {
+      res.status(404).json({ message: "Invalid password" });
       return;
     }
 
-    await user.update(
-      { name: name },
-      {
-        where: { email: email },
-      }
-    );
-    res
-      .status(200)
-      .json({ message: `User ${user.id}: name updated. New name: ${name}` });
+    const candidat = await db.User.findOne({ where: { email: email } });
+
+    if (candidat && user.email !== candidat.email) {
+      return res.status(400).json({ message: "Email already exists" });
+    }
+    if (password.length < 6) {
+      return res.status(400).json({ message: "Password to short" });
+    }
+    const salt = bcrypt.genSaltSync(10);
+    const updatableData = {
+      email: newEmail,
+      password: bcrypt.hashSync(newPassword, salt),
+    };
+    if (name) updatableData.name = name;
+    if (dob) updatableData.login = dob;
+
+    await user.update(updatableData, {
+      where: { email },
+    });
+
+    const jsonUser = user.toJSON();
+
+    delete jsonUser.password;
+    res.json({ user: jsonUser });
   } catch (err) {
+    console.log(err);
     res.status(500).json({ message: `Something went wrong` });
   }
 };
@@ -139,7 +179,16 @@ exports.getToken = async (req, res) => {
 
     const id = token.decodeToken(authorization);
 
-    const user = await db.User.findOne({ where: { id: id.data } });
+    const user = await db.User.findOne({
+      where: { id: id.data },
+      include: [
+        {
+          model: db.Images,
+          as: "image",
+          attributes: ["images"],
+        },
+      ],
+    });
 
     if (!user) {
       response.status(404).send("User not found");
@@ -150,8 +199,51 @@ exports.getToken = async (req, res) => {
     const jsonUser = user.toJSON();
 
     delete jsonUser.password;
-    res.send({ user: user, token: createdtoken });
+    res.send({ user: jsonUser, token: createdtoken });
   } catch (err) {
+    res.status(500).send("Something went wrong");
+  }
+};
+
+exports.uploadAvatar = async (req, res) => {
+  try {
+    const { authorization } = req.headers;
+    const id = token.decodeToken(authorization);
+    console.log("BB", req);
+    const file = req.file;
+    console.log("file", file);
+    const path = file.path;
+    console.log("id:", id);
+    console.log("auth:", authorization);
+
+    if (!file) {
+      res.srtatus(400).send("Error loading file");
+      return;
+    }
+
+    const image = await db.Images.findOne({
+      where: { userId: id.data },
+    });
+
+    if (!image) {
+      await db.Images.create({
+        images: path,
+        userId: id.data,
+      });
+    } else {
+      await db.Images.update(
+        {
+          images: path,
+        },
+        {
+          where: { userId: id.data },
+        }
+      );
+    }
+    res.json({ message: "Avatar was uploaded", path });
+  } catch (err) {
+    console.log("ERROR_____________________________________");
+    console.log(err);
     res.status(500).send("Something went wrong");
   }
 };

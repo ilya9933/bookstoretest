@@ -83,6 +83,7 @@ function ModalRegistration({ modalType }: Props) {
         <button>Registration</button>
       </form>
       <button onClick={(e) => modalTypeLog(e)}>Login</button>
+      <button className="CloseBtn">X</button>
     </div>
   );
 }

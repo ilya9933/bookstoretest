@@ -1,18 +1,34 @@
 import React from "react";
+import { Input, Space } from "antd";
+import { AudioOutlined } from "@ant-design/icons";
 
-function ImputSearch() {
+function InputSearch() {
+  const { Search } = Input;
+
+  const suffix = (
+    <AudioOutlined
+      style={{
+        fontSize: 16,
+        color: "#1890ff",
+      }}
+    />
+  );
+
+  const onSearch = (value: string) => {
+    console.log(value);
+  };
+
   return (
     <form className="form">
-      <input
-      // className="new-todo"
-      // placeholder="New Todo"
-      // autoFocus
-      // onChange={(e) => this.handleTextChange(e.target.value)}
-      // onKeyDown={this.handleChange}
-      // value={this.state.text}
-      />
+      <Space direction="vertical">
+        <Search
+          placeholder="input search text"
+          onSearch={onSearch}
+          enterButton
+        />
+      </Space>
     </form>
   );
 }
 
-export default ImputSearch;
+export default InputSearch;

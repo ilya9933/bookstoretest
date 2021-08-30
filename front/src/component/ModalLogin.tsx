@@ -10,6 +10,7 @@ interface IProps {
 }
 
 function ModalLogin({ modalType }: IProps) {
+  const [modalIsOpen, setIsOpen] = useState(false);
   const [password, setPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const dispatch = useDispatch();
@@ -36,6 +37,10 @@ function ModalLogin({ modalType }: IProps) {
     setEmail("");
     setPassword("");
   };
+
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   return (
     <div>

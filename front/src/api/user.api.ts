@@ -29,3 +29,44 @@ export const getUserTokenAPI = async (authToken: string) => {
   });
   return res.data;
 };
+
+export const UpdateUserAPI = async (
+  oldEmail: string,
+  newEmail: string,
+  name: string,
+  oldPassword: string,
+  newPassword: string,
+  dob: string,
+  authToken: string
+) => {
+  const res = await axios.post(
+    "update",
+    {
+      oldEmail,
+      newEmail,
+      name,
+      oldPassword,
+      newPassword,
+      dob,
+    },
+    {
+      headers: {
+        authorization: authToken,
+      },
+    }
+  );
+  return res.data;
+};
+
+export const AddPhotoAPI = async (file: FormData, authToken: string) => {
+  // console.log("qq", image);
+
+  const res = await axios.post("/user", file, {
+    headers: {
+      authorization: authToken,
+    },
+  });
+  console.log("data", res.data);
+
+  return res.data;
+};

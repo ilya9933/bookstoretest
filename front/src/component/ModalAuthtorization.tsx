@@ -1,8 +1,10 @@
+import { Button } from "antd";
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import { useAppSelector } from "../State";
 import ModalLogin from "./ModalLogin";
 import ModalRegistration from "./ModalRegistration";
+import "./style.css";
 
 function ModalAuthtorization() {
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -27,14 +29,18 @@ function ModalAuthtorization() {
 
   return (
     <div>
-      <button onClick={openModal}>Login</button>
+      <Button type="primary" onClick={() => openModal()}>
+        Login
+      </Button>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Example Modal"
       >
         <h2>Hello</h2>
-        <button onClick={closeModal}>close</button>
+        <button onClick={closeModal} className="CloseBtn">
+          X
+        </button>
         {modalAutor === "login" ? (
           <ModalLogin modalType={modalType} />
         ) : (

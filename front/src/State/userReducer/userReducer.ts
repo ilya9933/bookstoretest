@@ -1,16 +1,21 @@
 import { actions } from "./constUser";
 
+interface DataImage {
+  images: string;
+}
 export interface DataUser {
   id: number;
   name: string;
   dob: Date;
   email: string;
+  image: DataImage | null;
   createdAt: Date;
   updatedAt: Date;
 }
 
 interface UserState {
   data?: DataUser;
+  auth: boolean;
   loading: boolean;
   error: null | boolean;
 }
@@ -21,6 +26,7 @@ interface actionUser {
 }
 
 const defaultState: UserState = {
+  auth: false,
   loading: false,
   error: null,
 };
@@ -30,8 +36,22 @@ const user = (state = defaultState, action: actionUser): UserState => {
       return {
         ...state,
         data: action.payload,
-        loading: true,
+        auth: true,
       };
+    case actions.EXIT_USER:
+      return {
+        ...state,
+        auth: false,
+      };
+    case actions.ADD_IMAGE: {
+      if (!state.data) {
+        return state;
+      }
+      return {
+        ...state,
+        data: { ...state.data, image: { images: action.payload } },
+      };
+    }
     default:
       return state;
   }
