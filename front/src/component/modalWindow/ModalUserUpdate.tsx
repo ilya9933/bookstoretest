@@ -1,23 +1,18 @@
 import React, { useState } from "react";
 import { Input, Space } from "antd";
-import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
-import Modal from "react-modal";
+import {
+  EyeInvisibleOutlined,
+  EyeTwoTone,
+  QqOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
+
 import { useDispatch } from "react-redux";
 import {
   addPictureThunk,
   updateUserThunk,
-} from "../State/userReducer/userThunk";
-
-// interface img {
-//   fieldname: string;
-//   originalname: string;
-//   encoding: string;
-//   mimetype: string;
-//   destination: string;
-//   filename: string;
-//   path: string;
-//   size: string;
-// }
+} from "../../State/userReducer/userThunk";
+import "./modalStyle.css";
 
 function ModalUserUpdate() {
   const [oldPassword, setOldPassword] = useState<string>("");
@@ -27,6 +22,7 @@ function ModalUserUpdate() {
   const [name, setName] = useState<string>("");
   const [userAvatar, setUserAvatar] = useState<string | Blob>("");
   const [dob, setDob] = useState<string>(new Date().toDateString());
+  const [error, setError] = useState(false);
   const dispatch = useDispatch();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,22 +59,28 @@ function ModalUserUpdate() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const token = localStorage.getItem("authToken");
-    console.log("token", token);
-    if (!token) {
-      return;
+    setError(false);
+    if (oldPassword === "") {
+      setError(true);
+    } else {
+      const authToken = localStorage.getItem("authToken");
+      console.log("token", authToken);
+      if (!authToken) {
+        alert("An error has occurred");
+        return;
+      }
+      dispatch(
+        updateUserThunk(
+          oldEmail,
+          newEmail,
+          name,
+          oldPassword,
+          newPassword,
+          dob,
+          authToken
+        )
+      );
     }
-    dispatch(
-      updateUserThunk(
-        oldEmail,
-        newEmail,
-        name,
-        oldPassword,
-        newPassword,
-        dob,
-        token
-      )
-    );
   };
 
   const addPhoto = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -87,19 +89,19 @@ function ModalUserUpdate() {
       console.log("AV");
       setUserAvatar(currentAvatar);
     }
-    // if (e.target.files[0]) {
-    //   const currentAvatar = e.target.files[0];
-    //   setUserAvatar(currentAvatar);
-    // }
   };
 
   console.log("AVState", userAvatar);
   const updateUser = () => {};
 
   return (
-    <div>
-      <form onSubmit={(e) => handleSubmit(e)} method="get">
-        <input
+    <div className="modal__login">
+      <form
+        className="modal__form"
+        onSubmit={(e) => handleSubmit(e)}
+        method="get"
+      >
+        <Input
           placeholder="name"
           type="text"
           name="name"
@@ -107,8 +109,9 @@ function ModalUserUpdate() {
           onChange={(e) => {
             handleChange(e);
           }}
+          prefix={<QqOutlined />}
         />
-        <input
+        <Input
           type="email"
           name="oldEmail"
           placeholder="Old email"
@@ -116,8 +119,9 @@ function ModalUserUpdate() {
           onChange={(e) => {
             handleChange(e);
           }}
+          prefix={<UserOutlined />}
         />
-        <input
+        <Input
           type="email"
           name="newEmail"
           placeholder="New email"
@@ -125,7 +129,9 @@ function ModalUserUpdate() {
           onChange={(e) => {
             handleChange(e);
           }}
+          prefix={<UserOutlined />}
         />
+
         <Space direction="vertical">
           <Input.Password
             type="password"
@@ -169,6 +175,7 @@ function ModalUserUpdate() {
           Loud image
         </button>
       </form>
+      <div className="error">{error ? "Enter password" : ""}</div>
     </div>
   );
 }

@@ -1,25 +1,23 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "../State";
-import { loginUser } from "../State/userReducer/actionsUser";
-import user from "../State/userReducer/userReducer";
-import { registerUserThunk } from "../State/userReducer/userThunk";
-interface Props {
-  modalType(): void;
-}
+import { registerUserThunk } from "../../State/userReducer/userThunk";
+import "./modalStyle.css";
+import {
+  EyeInvisibleOutlined,
+  EyeTwoTone,
+  QqOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
+import { Input, Space } from "antd";
+import { userLoding } from "../../State/userReducer/actionsUser";
 
-function ModalRegistration({ modalType }: Props) {
+function ModalRegistration() {
   const [password, setPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [dob, setDob] = useState<string>(new Date().toDateString());
+  const [error, setError] = useState(false);
   const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.user);
-
-  const modalTypeLog = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
-    modalType();
-  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     switch (e.target.name) {
@@ -36,16 +34,26 @@ function ModalRegistration({ modalType }: Props) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(registerUserThunk(email, name, password, dob));
+    setError(false);
+    if (email === "" || password === "" || name === "" || dob === "") {
+      setError(true);
+    } else {
+      dispatch(userLoding());
+      dispatch(registerUserThunk(email, name, password, dob));
 
-    setEmail("");
-    setPassword("");
+      setEmail("");
+      setPassword("");
+    }
   };
 
   return (
-    <div>
-      <form onSubmit={(e) => handleSubmit(e)} method="get">
-        <input
+    <div className="modal__login">
+      <form
+        className="modal__form"
+        onSubmit={(e) => handleSubmit(e)}
+        method="get"
+      >
+        <Input
           placeholder="name"
           type="text"
           name="name"
@@ -53,8 +61,9 @@ function ModalRegistration({ modalType }: Props) {
           onChange={(e) => {
             handleChange(e);
           }}
+          prefix={<QqOutlined />}
         />
-        <input
+        <Input
           type="email"
           name="email"
           placeholder="email"
@@ -62,16 +71,22 @@ function ModalRegistration({ modalType }: Props) {
           onChange={(e) => {
             handleChange(e);
           }}
+          prefix={<UserOutlined />}
         />
-        <input
-          type="password"
-          name="password"
-          placeholder="password"
-          value={password}
-          onChange={(e) => {
-            handleChange(e);
-          }}
-        />
+        <Space direction="vertical">
+          <Input.Password
+            type="password"
+            name="password"
+            placeholder="password"
+            value={password}
+            onChange={(e) => {
+              handleChange(e);
+            }}
+            iconRender={(visible) =>
+              visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+            }
+          />
+        </Space>
         <input
           type="date"
           name="dob"
@@ -82,8 +97,7 @@ function ModalRegistration({ modalType }: Props) {
         />
         <button>Registration</button>
       </form>
-      <button onClick={(e) => modalTypeLog(e)}>Login</button>
-      <button className="CloseBtn">X</button>
+      <div className="error">{error ? "All fields must be filled" : ""}</div>
     </div>
   );
 }

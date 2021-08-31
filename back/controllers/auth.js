@@ -67,11 +67,22 @@ module.exports.register = async function (req, res) {
       dob: dob,
       password: bcrypt.hashSync(password, salt),
     });
+    const newUser = await db.User.findOne({
+      where: { email: email },
+      include: [
+        {
+          model: db.Images,
+          as: "image",
+          attributes: ["images"],
+        },
+      ],
+    });
 
-    const jsonUser = user.toJSON();
+    const jsonUser = newUser.toJSON();
+    const authToken = token.createToken(newUser.id);
 
     delete jsonUser.password;
-    res.json({ user: jsonUser });
+    res.json({ user: jsonUser, authToken: authToken });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Something went wrong" });
@@ -133,40 +144,44 @@ module.exports.update = async function (req, res) {
       res.status(404).send(`User not found`);
       return;
     }
-    if (oldEmail !== user.email) {
-      res.status(404).json({ message: "Invalid email" });
-      return;
-    }
     const passwordResult = bcrypt.compareSync(oldPassword, user.password);
     if (!passwordResult) {
       res.status(404).json({ message: "Invalid password" });
       return;
     }
+    if (newEmail) {
+      if (oldEmail !== user.email) {
+        res.status(404).json({ message: "Invalid email" });
+        return;
+      }
+      const candidat = await db.User.findOne({ where: { email: newEmail } });
 
-    const candidat = await db.User.findOne({ where: { email: email } });
-
-    if (candidat && user.email !== candidat.email) {
-      return res.status(400).json({ message: "Email already exists" });
+      if (candidat && user.email !== candidat.email) {
+        return res.status(400).json({ message: "Email already exists" });
+      }
     }
-    if (password.length < 6) {
-      return res.status(400).json({ message: "Password to short" });
+    if (newPassword) {
+      if (newPassword.length < 6) {
+        return res.status(400).json({ message: "Password to short" });
+      }
     }
     const salt = bcrypt.genSaltSync(10);
-    const updatableData = {
-      email: newEmail,
-      password: bcrypt.hashSync(newPassword, salt),
-    };
+    const updatableData = {};
     if (name) updatableData.name = name;
-    if (dob) updatableData.login = dob;
+    if (newEmail) updatableData.email = newEmail;
+    if (newPassword)
+      updatableData.password = bcrypt.hashSync(newPassword, salt);
+    if (dob) updatableData.dob = dob;
 
     await user.update(updatableData, {
-      where: { email },
+      where: { id: id.data },
     });
 
+    const authToken = token.createToken(user.id);
     const jsonUser = user.toJSON();
 
     delete jsonUser.password;
-    res.json({ user: jsonUser });
+    res.json({ user: jsonUser, token: authToken });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: `Something went wrong` });

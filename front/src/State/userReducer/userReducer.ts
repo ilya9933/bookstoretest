@@ -52,6 +52,30 @@ const user = (state = defaultState, action: actionUser): UserState => {
         data: { ...state.data, image: { images: action.payload } },
       };
     }
+    case actions.USER_LODING:
+      if (state.loading) {
+        return {
+          ...state,
+          loading: false,
+        };
+      } else {
+        return {
+          ...state,
+          loading: true,
+        };
+      }
+    case actions.ERROR_REQUEST:
+      if (state.error) {
+        return {
+          ...state,
+          error: false,
+        };
+      } else {
+        return {
+          ...state,
+          error: true,
+        };
+      }
     default:
       return state;
   }

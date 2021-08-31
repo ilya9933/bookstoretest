@@ -1,0 +1,45 @@
+.button {
+  background-color: #282c34;
+  border: 0vh;
+  color: aliceblue;
+}
+
+.button:hover {
+  background-color: aliceblue;
+  color: #282c34;
+}
+
+.button__modal {
+  width: 70px;
+  height: 35px;
+  background-color: #282c34;
+  border: 0vh;
+  color: aliceblue;
+}
+
+.button__modal:hover {
+  background: rgb(255, 255, 255);
+  color: #282c34;
+}
+
+.modal__login {
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.modal__form {
+  display: flex;
+  height: 30vh;
+
+  flex-direction: column;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  align-items: flex-start;
+  justify-content: space-evenly;
+}
+
+.error {
+  color: red;
+}

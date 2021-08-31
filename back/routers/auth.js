@@ -28,12 +28,7 @@ router.post(
 router.get("/get", token.tokenChecking, controllers.getUsers);
 router.post(
   "/update",
-  [
-    check("email", "All fields must be filled").notEmpty(),
-    check("password", "All fields must be filled").notEmpty(),
-    check("name", "All fields must be filled").notEmpty(),
-    check("dob", "All fields must be filled").notEmpty(),
-  ],
+  [check("oldPassword", "All fields must be filled").notEmpty()],
   token.tokenChecking,
   controllers.update
 );
