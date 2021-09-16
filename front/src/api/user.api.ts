@@ -1,8 +1,9 @@
 import { async } from "q";
 import axios from "./index";
 
+const authRoute = "/api/auth";
 export const loginUserAPI = async (email: string, password: string) => {
-  const res = await axios.post("login", { email, password });
+  const res = await axios.post(`${authRoute}/login`, { email, password });
   return res.data;
 };
 
@@ -12,7 +13,7 @@ export const registerUserAPI = async (
   password: string,
   dob: string
 ) => {
-  const res = await axios.post("register", {
+  const res = await axios.post(`${authRoute}/register`, {
     email,
     name,
     password,
@@ -22,7 +23,7 @@ export const registerUserAPI = async (
 };
 
 export const getUserTokenAPI = async (authToken: string) => {
-  const res = await axios.get("bytoken", {
+  const res = await axios.get(`${authRoute}/bytoken`, {
     headers: {
       authorization: authToken,
     },
@@ -40,7 +41,7 @@ export const UpdateUserAPI = async (
   authToken: string
 ) => {
   const res = await axios.post(
-    "update",
+    `${authRoute}/update`,
     {
       oldEmail,
       newEmail,
@@ -61,7 +62,7 @@ export const UpdateUserAPI = async (
 export const AddPhotoAPI = async (file: FormData, authToken: string) => {
   // console.log("qq", image);
 
-  const res = await axios.post("/user", file, {
+  const res = await axios.post(`${authRoute}/user`, file, {
     headers: {
       authorization: authToken,
     },

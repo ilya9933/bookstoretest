@@ -25,7 +25,7 @@ router.post(
   ],
   controllers.register
 );
-router.get("/get", token.tokenChecking, controllers.getUsers);
+
 router.post(
   "/update",
   [check("oldPassword", "All fields must be filled").notEmpty()],

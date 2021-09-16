@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import "./App.css";
-import BooksList from "./component/BooksList";
+import BooksList from "./component/sectionBookList/BooksList";
 import Header from "./component/Header";
 import LayoutDefault from "./component/LayoutDefault";
 import { getUserToken } from "./State/userReducer/userThunk";
@@ -22,9 +22,7 @@ function App() {
 
   return (
     <div className="App">
-      <LayoutDefault>
-        <BooksList />
-      </LayoutDefault>
+      <LayoutDefault />
     </div>
   );
 }

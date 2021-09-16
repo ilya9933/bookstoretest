@@ -1,0 +1,276 @@
+"use strict";
+
+module.exports = {
+  up: async (queryInterface, Sequelize) => {
+    return queryInterface.bulkInsert("BookGenres", [
+      {
+        bookId: 1,
+        genreId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 2,
+        genreId: 2,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 3,
+        genreId: 3,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 4,
+        genreId: 4,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 5,
+        genreId: 5,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 6,
+        genreId: 6,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 7,
+        genreId: 7,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 8,
+        genreId: 8,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 9,
+        genreId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 10,
+        genreId: 2,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 11,
+        genreId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 12,
+        genreId: 2,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 13,
+        genreId: 3,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 14,
+        genreId: 4,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 15,
+        genreId: 5,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 16,
+        genreId: 6,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 17,
+        genreId: 7,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 18,
+        genreId: 8,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 19,
+        genreId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 20,
+        genreId: 2,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 21,
+        genreId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 22,
+        genreId: 2,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 1,
+        genreId: 6,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 2,
+        genreId: 5,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 3,
+        genreId: 4,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 4,
+        genreId: 3,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 5,
+        genreId: 2,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 6,
+        genreId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 7,
+        genreId: 8,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 8,
+        genreId: 7,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 9,
+        genreId: 6,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 10,
+        genreId: 5,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 11,
+        genreId: 4,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 12,
+        genreId: 3,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 13,
+        genreId: 2,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 14,
+        genreId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 15,
+        genreId: 8,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 16,
+        genreId: 7,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 17,
+        genreId: 6,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 18,
+        genreId: 5,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 19,
+        genreId: 4,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 20,
+        genreId: 3,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 21,
+        genreId: 2,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        bookId: 22,
+        genreId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ]);
+  },
+
+  down: async (queryInterface, Sequelize) => {
+    return queryInterface.bulkDelete("BookGenres", null, {});
+  },
+};

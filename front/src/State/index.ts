@@ -1,10 +1,12 @@
-import { combineReducers } from 'redux';
-import user from './userReducer/userReducer';
-import store from './store';
-import { TypedUseSelectorHook, useSelector } from 'react-redux';
+import { combineReducers } from "redux";
+import user from "./userReducer/userReducer";
+import book from "./bookReducer/bookReducer";
+import store from "./store";
+import { TypedUseSelectorHook, useSelector } from "react-redux";
 
 const rootReducer = combineReducers({
   user,
+  book,
 });
 export default rootReducer;
 

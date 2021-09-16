@@ -1,0 +1,33 @@
+.filter__field {
+  display: flex;
+  flex-direction: column;
+  border-right: solid #282c34;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  align-content: stretch;
+}
+.button__categories {
+  width: 80px;
+  height: 35px;
+  padding: 0px;
+  border-style: groove;
+  background: rgb(255, 255, 255);
+  color: #282c34;
+}
+
+.button__categories:hover {
+  background: #282c34;
+  color: aliceblue;
+  box-shadow: 0 0 3px 3px rgb(153, 125, 218);
+}
+.filter_button {
+  display: flex;
+  flex-direction: column;
+}
+.filter__titel {
+  border-bottom: solid #282c34;
+}
+.dropDownMenu {
+  display: flex;
+  flex-direction: column;
+}

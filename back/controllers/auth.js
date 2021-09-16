@@ -89,27 +89,6 @@ module.exports.register = async function (req, res) {
   }
 };
 
-module.exports.getUsers = async (req, res) => {
-  try {
-    const users = await db.User.findAll({
-      raw: true,
-      attributes: ["id", "name", "email", "dob"],
-    });
-    console.log(req.headers);
-    if (!users) {
-      res.status(404).json({
-        message: "No registered users",
-      });
-      return;
-    }
-
-    res.status(200).json({ message: users });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: "Something went wrong", data: err });
-  }
-};
-
 module.exports.delete = async function (req, res) {
   const { id } = req.body;
 

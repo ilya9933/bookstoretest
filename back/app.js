@@ -1,5 +1,6 @@
 const express = require("express");
-const router = require("./routers/auth");
+const routerUser = require("./routers/auth");
+const routerBook = require("./routers/book");
 const parser = require("body-parser");
 const path = require("path");
 const cors = require("cors");
@@ -13,6 +14,7 @@ app.use(parser.urlencoded({ extended: true }));
 app.use(parser.json());
 app.use("/static", express.static("static"));
 app.use(multer({ dest: "static" }).single("file"));
-app.use("/api/auth", router);
+app.use("/api/auth", routerUser);
+app.use("/book", routerBook);
 
 module.exports = app;

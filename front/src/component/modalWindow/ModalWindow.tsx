@@ -1,12 +1,13 @@
-import { Button } from "antd";
+import { Button, Spin } from "antd";
 import React, { useState } from "react";
 import Modal from "react-modal";
 import { useAppSelector } from "../../State";
 import ModalAuthtorization from "./ModalAuthtorization";
 import ModalUser from "./ModalUser";
-import { CloseOutlined } from "@ant-design/icons";
+import { CloseOutlined, LoadingOutlined } from "@ant-design/icons";
 import "../style.css";
 import "./modalStyle.css";
+
 import { useDispatch } from "react-redux";
 import { exitUser } from "../../State/userReducer/actionsUser";
 
@@ -14,6 +15,7 @@ function ModalWindow() {
   const [modalIsOpen, setIsOpen] = useState(false);
   const user = useAppSelector((state) => state.user);
   const dispatch = useDispatch();
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   function buttonExitUserClick() {
     localStorage.removeItem("authToken");
@@ -42,7 +44,7 @@ function ModalWindow() {
           ExitUser
         </Button>
       ) : (
-        <div></div>
+        <></>
       )}
       <Modal
         isOpen={modalIsOpen}
@@ -53,7 +55,13 @@ function ModalWindow() {
         <Button type="primary" onClick={closeModal} className="CloseBtn">
           <CloseOutlined />
         </Button>
-        <div>{user.auth ? <ModalUser /> : <ModalAuthtorization />}</div>
+        <div className="modal relative">
+          {user.loading ? (
+            <Spin className="louding" indicator={antIcon} />
+          ) : (
+            <div>{user.auth ? <ModalUser /> : <ModalAuthtorization />}</div>
+          )}
+        </div>
       </Modal>
     </div>
   );

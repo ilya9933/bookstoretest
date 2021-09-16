@@ -1,6 +1,7 @@
 import React from "react";
 import { Input, Space } from "antd";
 import { AudioOutlined } from "@ant-design/icons";
+import "./style.css";
 
 function InputSearch() {
   const { Search } = Input;
@@ -19,7 +20,7 @@ function InputSearch() {
   };
 
   return (
-    <form className="form">
+    <form>
       <Space direction="vertical">
         <Search
           placeholder="input search text"
