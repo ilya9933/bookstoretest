@@ -38,10 +38,10 @@ function BooksList() {
     return <BooksItem id={id} name={nameBook} price={price} />;
   });
 
-  const onchangePagination = (e: number) => {
-    console.log("num", e);
+  const onchangePagination = (number: number) => {
+    console.log("num", number);
     const filters = {
-      page: e,
+      page: number,
       filterByAuthor: books.filter.filterByAuthor,
       filterByPublisher: books.filter.filterByPublisher,
       filterByGenre: books.filter.filterByGenre,
@@ -63,7 +63,7 @@ function BooksList() {
       {books.meta ? (
         <Pagination
           className="booksPagination"
-          onChange={(e) => onchangePagination(e)}
+          onChange={(number) => onchangePagination(number)}
           defaultCurrent={books.meta?.current_page}
           total={books.meta?.total}
         />

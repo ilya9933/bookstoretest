@@ -1,5 +1,6 @@
 import { Button, Spin } from "antd";
 import React, { useState } from "react";
+import { BrowserRouter as Router, Switch, useLocation } from "react-router-dom";
 import Modal from "react-modal";
 import { useAppSelector } from "../../State";
 import ModalAuthtorization from "./ModalAuthtorization";
@@ -7,9 +8,9 @@ import ModalUser from "./ModalUser";
 import { CloseOutlined, LoadingOutlined } from "@ant-design/icons";
 import "../style.css";
 import "./modalStyle.css";
-
 import { useDispatch } from "react-redux";
 import { exitUser } from "../../State/userReducer/actionsUser";
+import PrivateRoute from "../../route/PrivateRouter";
 
 function ModalWindow() {
   const [modalIsOpen, setIsOpen] = useState(false);

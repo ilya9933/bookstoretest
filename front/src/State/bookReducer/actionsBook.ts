@@ -10,9 +10,9 @@ export const loadingBook = () => ({
   type: actions.LOADING_BOOK,
 });
 
-export const paginationBook = (e: number) => ({
+export const paginationBook = (number: number) => ({
   type: actions.PAGINATION_BOOK,
-  payload: e,
+  payload: number,
 });
 
 export const getBooksInfo = (booksInfo: BooksInfo) => ({
